@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const authRoutes = require("./routes/authRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
@@ -23,5 +25,4 @@ app.get("/", (req, res) => {
   });
 });
 
-module.exports = app;
 module.exports = app;
