@@ -1,11 +1,10 @@
 const Task = require("../models/Task");
 
-// Create Task
+// CREATE TASK
 exports.createTask = async (req, res) => {
   try {
     const { title, description, dueDate, priority } = req.body;
 
-    // Validation
     if (!title) {
       return res.status(400).json({
         success: false,
@@ -15,9 +14,14 @@ exports.createTask = async (req, res) => {
 
     const task = await Task.create({
       title,
-      description,
-      dueDate,
-      priority,
+      description: description || "",
+      dueDate: dueDate || null,
+
+      priority: priority
+        ? priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase()
+        : "Medium",
+
+      status: "To-Do",
       user: req.user.id,
     });
 
@@ -25,6 +29,7 @@ exports.createTask = async (req, res) => {
       success: true,
       task,
     });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -33,7 +38,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// Get all tasks (user-specific)
+// GET TASKS
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({ createdAt: -1 });
@@ -42,6 +47,7 @@ exports.getTasks = async (req, res) => {
       success: true,
       tasks,
     });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -50,58 +56,13 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// Get single task
-exports.getTaskById = async (req, res) => {
-  try {
-    const task = await Task.findOne({
-      _id: req.params.id,
-      user: req.user.id,
-    });
-
-    if (!task) {
-      return res.status(404).json({
-        success: false,
-        message: "Task not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      task,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-// Update task
+// UPDATE TASK (STATUS + EDIT)
 exports.updateTask = async (req, res) => {
   try {
-    // Validation
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "No data provided for update",
-      });
-    }
-
-    const { title, description, dueDate, priority, status } = req.body;
-
-    const updatedData = {
-      title,
-      description,
-      dueDate,
-      priority,
-      status,
-    };
-
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
-      updatedData,
-      { new: true }
+      req.body,
+      { new: true, runValidators: true }
     );
 
     if (!task) {
@@ -113,9 +74,9 @@ exports.updateTask = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Task updated successfully",
       task,
     });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -124,7 +85,7 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// Delete task
+// DELETE TASK
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({
@@ -141,8 +102,41 @@ exports.deleteTask = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Task deleted successfully",
+      message: "Task deleted",
     });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// CHANGE STATUS (IMPORTANT FOR PROFESSIONAL SYSTEM)
+exports.updateStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const allowed = ["To-Do", "In Progress", "Completed"];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid status",
+      });
+    }
+
+    const task = await Task.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { status },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      task,
+    });
+
   } catch (error) {
     res.status(500).json({
       success: false,

@@ -1,29 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  createTask,
-  getTasks,
-  getTaskById,
-  updateTask,
-  deleteTask,
-} = require("../controllers/taskController");
-
+const taskController = require("../controllers/taskController");
 const protect = require("../middleware/authMiddleware");
 
-// Create task
-router.post("/", protect, createTask);
+// CRUD
+router.post("/", protect, taskController.createTask);
+router.get("/", protect, taskController.getTasks);
+router.put("/:id", protect, taskController.updateTask);
+router.delete("/:id", protect, taskController.deleteTask);
 
-// Get all tasks
-router.get("/", protect, getTasks);
-
-// Get single task
-router.get("/:id", protect, getTaskById);
-
-// Update task
-router.put("/:id", protect, updateTask);
-
-// Delete task
-router.delete("/:id", protect, deleteTask);
+// STATUS UPDATE (NEW PROFESSIONAL FEATURE)
+router.patch("/:id/status", protect, taskController.updateStatus);
 
 module.exports = router;

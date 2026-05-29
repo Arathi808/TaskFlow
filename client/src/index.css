@@ -1,0 +1,252 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* ================= AUTH ================= */
+
+.container {
+  width: 360px;
+  margin: 80px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* optional subtext (welcome message) */
+.subtext {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 18px;
+  letter-spacing: 0.2px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif ;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #000;
+}
+
+/* PASSWORD FIELD (SHOW/HIDE INSIDE INPUT) */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 10px 45px 10px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* REAL INSIDE BUTTON LOOK */
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+/* BUTTON */
+button {
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard-container {
+  width: 600px;
+  margin: 40px auto;
+}
+
+/* HEADER */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* INPUT CARD */
+.task-input-card {
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.task-input-card input,
+.task-input-card select {
+  flex: 1;
+}
+
+/* TASK LIST */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* TASK CARD */
+.task-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* TASK HEADER */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* DONE TEXT */
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* PRIORITY BADGES */
+.priority {
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.priority.low {
+  background: #2ecc71;
+}
+
+.priority.medium {
+  background: #f39c12;
+}
+
+.priority.high {
+  background: #e74c3c;
+}
+
+/* ================= STATUS UI ================= */
+
+.status-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+/* STATUS PILL */
+.status-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  background: #eee;
+  color: #333;
+}
+
+
+/* STATUS COLORS */
+.status-pill.to-do {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.status-pill.in-progress {
+  background: #f39c12;
+  color: white;
+}
+
+.status-pill.completed {
+  background: #2ecc71;
+  color: white;
+}
+
+/* ACTION BUTTONS */
+.task-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 10px;
+  margin-top: 20px;
+  color: #666;
+}
+
+.empty-state h3 {
+  margin-bottom: 5px;
+}
+
+.empty-state p {
+  font-size: 13px;
+  color: #888;
+}
